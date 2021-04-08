@@ -3,10 +3,9 @@
 <img alt="npm" src="https://img.shields.io/npm/v/paxy-ui?style=for-the-badge"/>
 </p>
 
-# paxy-ui:
+# paxy-ui
 
 # Features
-
 
 # License
 
