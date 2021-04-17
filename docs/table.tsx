@@ -1,6 +1,7 @@
 import { createTable } from '../components/table';
 import { Services } from './service';
 import { ItemList } from '../src';
+import { Image } from 'antd';
 
 export const requestFields = [
   { name: 'name', required: true, type: 'string' },
@@ -28,6 +29,17 @@ export const requestFields = [
     ],
   },
   { name: 'paragraph', required: true, type: 'paragraph' },
+  {
+    name: 'photo',
+    required: false,
+    type: 'upload',
+    render: (_: any, row: any) => {
+      if (row.photo) {
+        return <Image src={row.photo.url} />;
+      }
+      return <></>;
+    },
+  },
 ];
 
 export const updateRequestFields = [

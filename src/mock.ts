@@ -61,7 +61,7 @@ export class ItemList {
             }
             break;
           case 'upload':
-            value = { url: faker.image.image() };
+            value = { url: faker.image.image(), name: faker.random.word() };
             break;
           default:
             if (i === 0) {

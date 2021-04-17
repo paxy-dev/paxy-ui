@@ -91,6 +91,15 @@ const createColumns = (fields: Field[]) => {
         };
         render = render || (() => <></>);
         sorter = undefined;
+        formItemProps = {
+          getValueFromEvent: (e: any) => {
+            if (!e || !e.fileList) {
+              return e;
+            }
+            const { fileList } = e;
+            return fileList[0];
+          },
+        };
         break;
       case 'date':
         if (sorter === undefined) {

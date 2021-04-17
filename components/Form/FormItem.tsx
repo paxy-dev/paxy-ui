@@ -73,13 +73,13 @@ export const createFormItem = (field: Field) => {
       };
       break;
     case 'upload':
-      valuePropName = 'fileList';
+      // valuePropName = 'fileList';
       formItmeProps.getValueFromEvent = (e: any) => {
         if (!e || !e.fileList) {
           return e;
         }
         const { fileList } = e;
-        return fileList;
+        return fileList[0];
       };
       InputUnit = Upload;
       break;

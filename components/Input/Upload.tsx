@@ -9,9 +9,9 @@ interface UploadState {
 }
 
 export default (props: any) => {
-  const { value, ...others } = props;
+  const { value: defaultFileList, id, ...others } = props;
   const [uploadState, setUploadState] = useState<UploadState>({
-    fileList: [],
+    fileList: defaultFileList ? [defaultFileList] : [],
     uploading: false,
   });
   const disableUpload = () => {
@@ -48,7 +48,7 @@ export default (props: any) => {
     },
   };
   return (
-    <Upload {...others} {...uploadProps}>
+    <Upload {...others} {...uploadProps} fileList={uploadState.fileList}>
       <Button icon={<UploadOutlined />} disabled={disableUpload()}>
         Click to Upload
       </Button>
