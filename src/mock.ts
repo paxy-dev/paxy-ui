@@ -63,6 +63,9 @@ export class ItemList {
           case 'upload':
             value = { url: faker.image.image(), name: faker.random.word() };
             break;
+          case 'json':
+            value = faker.datatype.json();
+            break;
           default:
             if (i === 0) {
               value = null;

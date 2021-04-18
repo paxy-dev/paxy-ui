@@ -13,6 +13,7 @@ export const createFormItem = (field: Field) => {
   let InputUnit: any;
   let valuePropName = 'value';
   const formItmeProps: any = {};
+  const rules: any[] = [{ required: field.required }];
 
   switch (field.type) {
     case 'number':
@@ -83,6 +84,24 @@ export const createFormItem = (field: Field) => {
       };
       InputUnit = Upload;
       break;
+    case 'json':
+      rules.push({
+        validator: (_: any, value: string) => {
+          return new Promise<void>((resolve, reject) => {
+            if (value) {
+              try {
+                JSON.parse(value);
+                resolve();
+              } catch (error) {
+                reject(new Error('incorrect format'));
+              }
+            }
+            resolve();
+          });
+        },
+      });
+      InputUnit = (props: any) => <TextArea {...props} />;
+      break;
     default:
       InputUnit = (props: any) => <Input {...props} />;
   }
@@ -92,9 +111,10 @@ export const createFormItem = (field: Field) => {
       wrapperCol={{ span: 15 }}
       label={field.label ? field.label : field.name.charAt(0).toUpperCase() + field.name.slice(1)}
       name={field.name}
-      rules={[{ required: field.required }]}
+      rules={rules}
       key={field.name}
       valuePropName={valuePropName}
+      tooltip={field.note}
       {...formItmeProps}
     >
       <InputUnit disabled={field.disabled} />

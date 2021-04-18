@@ -5,7 +5,7 @@ import { Image } from 'antd';
 
 export const requestFields = [
   { name: 'name', required: true, type: 'string' },
-  { name: 'description', required: true, type: 'text' },
+  { name: 'description', required: true, type: 'text', note: 'write something to describe' },
   { name: 'boolean', required: true, type: 'boolean' },
   { name: 'number', required: true, type: 'number' },
   { name: 'date', required: true, type: 'date' },
@@ -29,6 +29,7 @@ export const requestFields = [
     ],
   },
   { name: 'paragraph', required: true, type: 'paragraph' },
+  { name: 'json', required: false, type: 'json', note: '[{"type":"normal","sn":"918539188"}]' },
   {
     name: 'photo',
     required: false,

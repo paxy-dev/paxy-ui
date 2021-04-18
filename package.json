@@ -47,7 +47,7 @@
     "@ant-design/pro-layout": "6.16.0",
     "@ant-design/pro-table": "2.32.2",
     "@ant-design/pro-utils": "1.12.0",
-    "faker": "5.4.0",
+    "faker": "^5.5.3",
     "moment": "^2.29.1",
     "path": "^0.12.7",
     "short-uuid": "4.1.0",
