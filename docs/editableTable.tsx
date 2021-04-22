@@ -1,3 +1,5 @@
+import enUS from 'antd/lib/locale/en_US';
+import { ConfigProvider } from 'antd';
 import { createEditTable } from '../components';
 import { Services } from './service';
 import { ItemList } from '../src';
@@ -15,7 +17,9 @@ export const requestFields = [
     type: 'select',
     valueEnum: [
       { text: 'Tifa', value: 'tifaaaaa' },
-      { text: 'Mikasa Akaman', value: 'mikasa' },
+      { text: 'Aerith', value: 'aerith' },
+      { text: 'Garnet', value: 'garnet' },
+      { text: 'Yuna', value: 'yuna' },
     ],
   },
   {
@@ -25,6 +29,7 @@ export const requestFields = [
     valueEnum: [
       { text: 'PS4', value: 'ps4' },
       { text: 'Switch', value: 'switch' },
+      { text: 'Wii', value: 'wii' },
       { text: 'Oculus Quest 2', value: 'oculusquest2' },
     ],
   },
@@ -59,12 +64,20 @@ itemList.init(tableFields, 3);
 const services = new Services('Kitchen', tableFields, {}, itemList);
 
 const TableList = createEditTable(
-  'Food',
-  'kitchen',
-  ['foodoption'],
+  'EditableTable',
+  'RootTable',
+  ['subtable1'],
   tableFields,
   services.createServices(),
   null,
 );
 
-export default TableList;
+export default () => {
+  return (
+    <>
+      <ConfigProvider locale={enUS}>
+        <TableList />
+      </ConfigProvider>
+    </>
+  );
+};

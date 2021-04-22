@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button, message, Divider, Switch } from 'antd';
+import { Button, message, Divider, Switch, Tag } from 'antd';
 import { Link } from 'umi';
 import type { BasicLayoutProps } from '@ant-design/pro-layout';
 import { PageContainer, PageHeaderWrapper } from '@ant-design/pro-layout';
@@ -16,6 +16,30 @@ import ProTable, { EditableProTable } from '@ant-design/pro-table';
 import type { Field, Services } from './data';
 import { modalFormFactory } from './Form';
 import { Upload } from './Input';
+
+const createLinkColumn = (rootName: string, links: string[]) => {
+  let linkColumn: any = [];
+  if (links.length > 0) {
+    linkColumn = [
+      {
+        name: 'links',
+        type: 'text',
+        required: true,
+        disabled: true,
+        render: (_: any, record: { id: string }) => {
+          return links.map((i) => {
+            return (
+              <Tag key={i}>
+                <Link to={`/${i}s?${rootName.toLowerCase()}=${record.id}`}>{i}</Link>
+              </Tag>
+            );
+          });
+        },
+      },
+    ];
+  }
+  return linkColumn;
+};
 
 const createColumns = (fields: Field[]) => {
   return fields.map((field: Field) => {
@@ -151,6 +175,8 @@ export const createTable = (
   updateRequestFields: Field[],
   tableFields: Field[],
   services: Services,
+  links: string[] = [],
+  scrollX: number = 1600,
 ) => {
   const CreateForm = modalFormFactory(`New ${name}`, requestFields);
   const UpdateForm = modalFormFactory(`Update ${name}`, updateRequestFields);
@@ -172,7 +198,9 @@ export const createTable = (
     const [deleteFormValues, setDeleteFormValues] = useState({});
     const actionRef = useRef<ActionType>();
 
+    const linkColumn = createLinkColumn(name, links);
     const columns = createColumns([
+      ...linkColumn,
       ...tableFields,
       {
         name: 'option',
@@ -220,6 +248,7 @@ export const createTable = (
       <PageHeaderWrapper breadcrumb={{ routes }}>
         <ProTable
           headerTitle=""
+          scroll={{ x: scrollX }}
           actionRef={actionRef}
           rowKey="id"
           search={{
@@ -312,6 +341,7 @@ export const createEditTable = (
   tableFields: Field[],
   services: Services,
   extra: object,
+  scrollX: number = 1600,
 ) => {
   const createHandler = createServiceHandler(`Adding ${name}`, services.create);
   const updateHandler = createServiceHandler(`Update ${name}`, services.update);
@@ -323,27 +353,7 @@ export const createEditTable = (
     const [editableKeys, setEditableRowKeys] = useState<React.Key[]>();
     const actionRef = useRef<ActionType>();
 
-    let linkColumn: any = [];
-    if (links.length > 0) {
-      linkColumn = [
-        {
-          name: 'links',
-          type: 'text',
-          required: true,
-          disabled: true,
-          render: (_: any, record: { id: string }) => {
-            return links.map((i) => {
-              return (
-                <Link key={i} to={`/${i}s?${name.toLowerCase()}=${record.id}`}>
-                  {i}
-                </Link>
-              );
-            });
-          },
-        },
-      ];
-    }
-
+    const linkColumn = createLinkColumn(name, links);
     const columns = createColumns([
       ...linkColumn,
       {
@@ -401,6 +411,7 @@ export const createEditTable = (
         <EditableProTable
           {...extra}
           rowKey="id"
+          scroll={{ x: scrollX }}
           headerTitle=""
           options={{ reload: true, setting: false }}
           maxLength={500}

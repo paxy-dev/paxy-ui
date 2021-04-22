@@ -36,10 +36,10 @@ export class ItemList {
         let value;
         switch (field.type) {
           case 'number':
-            value = faker.random.number();
+            value = faker.datatype.number();
             break;
           case 'boolean':
-            value = faker.random.boolean();
+            value = faker.datatype.boolean();
             break;
           case 'text':
             if (i === 0) {

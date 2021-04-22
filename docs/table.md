@@ -1,3 +1,3 @@
-Create a modal from from fields.
+Create a table from fields.
 
 <code src="./table.tsx"></code>
