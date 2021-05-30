@@ -13,7 +13,7 @@ import {
 import type { ActionType } from '@ant-design/pro-table';
 import ProTable, { EditableProTable } from '@ant-design/pro-table';
 
-import type { Field, Services } from './data';
+import type { Field, Services, TableAction } from './data';
 import { modalFormFactory } from './Form';
 import { Upload } from './Input';
 
@@ -168,6 +168,36 @@ const createServiceHandler = (msg: string, service: (fieldsValues: any) => void)
   };
 };
 
+const ActionComponent: React.FC<TableAction> = (props) => {
+  const ActionForm = modalFormFactory(`${props.name}`, props.fields);
+  const serviceHandler = createServiceHandler(`${props.name}`, props.service);
+  const [visible, handleModalVisible] = useState<boolean>(false);
+  const actionRef = useRef<ActionType>();
+
+  return (
+    <>
+      <Button key="addItem" type="primary" onClick={() => handleModalVisible(true)}>
+        {props.name}
+      </Button>
+      <ActionForm
+        onSubmit={async (value: any) => {
+          const success = await serviceHandler(value);
+          if (success) {
+            handleModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
+        onCancel={() => {
+          handleModalVisible(false);
+        }}
+        modalVisible={visible}
+      />
+    </>
+  );
+};
+
 export const createTable = (
   name: string,
   parentField: string,
@@ -177,6 +207,7 @@ export const createTable = (
   services: Services,
   links: string[] = [],
   scrollX: number = 1600,
+  actions: TableAction[] = [],
 ) => {
   const CreateForm = modalFormFactory(`New ${name}`, requestFields);
   const UpdateForm = modalFormFactory(`Update ${name}`, updateRequestFields);
@@ -244,6 +275,10 @@ export const createTable = (
       },
     ];
 
+    const actionButtons = actions.map((i: TableAction) => {
+      return <ActionComponent {...i} />;
+    });
+
     return (
       <PageHeaderWrapper breadcrumb={{ routes }}>
         <ProTable
@@ -258,6 +293,7 @@ export const createTable = (
             <Button key="addItem" type="primary" onClick={() => handleModalVisible(true)}>
               <PlusOutlined /> Add
             </Button>,
+            ...actionButtons,
           ]}
           params={queryParams}
           request={(params: any, sorter) => {
@@ -342,10 +378,15 @@ export const createEditTable = (
   services: Services,
   extra: object,
   scrollX: number = 1600,
+  actions: TableAction[] = [],
 ) => {
   const createHandler = createServiceHandler(`Adding ${name}`, services.create);
   const updateHandler = createServiceHandler(`Update ${name}`, services.update);
   const deleteHandler = createServiceHandler(`Delete ${name}`, services.delete);
+
+  const actionButtons = actions.map((i: TableAction) => {
+    return <ActionComponent {...i} />;
+  });
 
   const Table: React.FC<BasicLayoutProps> = ({ location }) => {
     const queryParams = location?.query || {};
@@ -417,6 +458,7 @@ export const createEditTable = (
           maxLength={500}
           pagination={{ defaultPageSize: 50 }}
           actionRef={actionRef}
+          toolBarRender={() => [...actionButtons]}
           recordCreatorProps={{
             position: 'top',
             creatorButtonText: 'Add New',

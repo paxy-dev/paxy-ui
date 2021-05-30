@@ -69,7 +69,18 @@ const TableList = createEditTable(
   ['subtable1'],
   tableFields,
   services.createServices(),
-  null,
+  undefined,
+  undefined,
+  [
+    {
+      name: 'test',
+      fields: [
+        { name: 'name', required: true, type: 'string' },
+        { name: 'description', required: true, type: 'text', note: 'write something to describe' },
+      ],
+      service: (values: any) => console.log(values),
+    },
+  ],
 );
 
 export default () => {

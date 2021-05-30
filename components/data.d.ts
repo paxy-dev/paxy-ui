@@ -36,3 +36,9 @@ export interface Services {
   query: (fieldsValues: unknown) => Partial<RequestData<Record<string, any>>>;
   delete: (fieldsValues: unknown) => void;
 }
+
+export interface TableAction {
+  name: string;
+  fields: Field[];
+  service: (fieldsValues: unknown) => void;
+}
