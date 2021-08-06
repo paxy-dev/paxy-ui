@@ -134,6 +134,10 @@ const createColumns = (fields: Field[]) => {
         break;
     }
 
+    if (field.required) {
+      formItemProps = { ...formItemProps, rules: [{ required: true, message: 'empty' }] };
+    }
+
     return {
       title: field.label ? field.label : field.name.charAt(0).toUpperCase() + field.name.slice(1),
       dataIndex: field.name,
