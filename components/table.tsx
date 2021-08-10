@@ -423,7 +423,7 @@ export const createEditTable = (
           </a>,
           <EditableProTable.RecordCreator
             key="copy"
-            position="top"
+            position="bottom"
             record={{
               ...record,
               id: '-',
@@ -464,7 +464,7 @@ export const createEditTable = (
           actionRef={actionRef}
           toolBarRender={() => [...actionButtons]}
           recordCreatorProps={{
-            position: 'top',
+            position: 'bottom',
             creatorButtonText: 'Add New',
             record: () => {
               const r = {
