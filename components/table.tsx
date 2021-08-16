@@ -210,7 +210,7 @@ export const createTable = (
   tableFields: Field[],
   services: Services,
   links: string[] = [],
-  scrollX: number = 1600,
+  extra: object = { scroll: { x: 1600 } },
   actions: TableAction[] = [],
 ) => {
   const CreateForm = modalFormFactory(`New ${name}`, requestFields);
@@ -286,8 +286,8 @@ export const createTable = (
     return (
       <PageHeaderWrapper breadcrumb={{ routes }}>
         <ProTable
+          {...extra}
           headerTitle=""
-          scroll={{ x: scrollX }}
           actionRef={actionRef}
           rowKey="id"
           search={{
@@ -380,8 +380,7 @@ export const createEditTable = (
   links: string[],
   tableFields: Field[],
   services: Services,
-  extra: object,
-  scrollX: number = 1600,
+  extra: object = { scroll: { x: 1600, y: 1000 } },
   actions: TableAction[] = [],
 ) => {
   const createHandler = createServiceHandler(`Adding ${name}`, services.create);
@@ -456,7 +455,6 @@ export const createEditTable = (
         <EditableProTable
           {...extra}
           rowKey="id"
-          scroll={{ x: scrollX }}
           headerTitle=""
           options={{ reload: true, setting: false }}
           maxLength={500}

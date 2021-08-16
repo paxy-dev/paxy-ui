@@ -70,7 +70,6 @@ const TableList = createEditTable(
   tableFields,
   services.createServices(),
   undefined,
-  undefined,
   [
     {
       name: 'test',
