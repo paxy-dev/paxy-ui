@@ -495,7 +495,7 @@ export const createEditTable = (
             editableKeys,
             onSave: async (_, row: any, newLine?: any) => {
               let success = false;
-              if (newLine) {
+              if (row.id === '-') {
                 const { id, index, createdAt, updatedAt, ...others } = row;
                 success = await createHandler(others);
               } else {
