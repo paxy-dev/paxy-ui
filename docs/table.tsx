@@ -82,6 +82,7 @@ const TableList = createTable(
       service: (values: any) => console.log(values),
     },
   ],
+  true,
 );
 
 export default () => {

@@ -16,6 +16,7 @@ import ProTable, { EditableProTable } from '@ant-design/pro-table';
 import type { Field, Services, TableAction } from './data';
 import { modalFormFactory } from './Form';
 import { Upload } from './Input';
+import Drawer from './Drawer';
 
 const createLinkColumn = (rootName: string, links: string[]) => {
   let linkColumn: any = [];
@@ -212,6 +213,7 @@ export const createTable = (
   links: string[] = [],
   extra: object = { scroll: { x: 1600 } },
   actions: TableAction[] = [],
+  enableRowSelection: boolean = false,
 ) => {
   const CreateForm = modalFormFactory(`New ${name}`, requestFields);
   const UpdateForm = modalFormFactory(`Update ${name}`, updateRequestFields);
@@ -231,6 +233,8 @@ export const createTable = (
     const [deleteModalVisible, handleDeleteModalVisible] = useState<boolean>(false);
     const [updateFormValues, setUpdateFormValues] = useState({});
     const [deleteFormValues, setDeleteFormValues] = useState({});
+    const [drawerVisible, setDrawerVisible] = useState(false);
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const actionRef = useRef<ActionType>();
 
     const linkColumn = createLinkColumn(name, links);
@@ -283,12 +287,39 @@ export const createTable = (
       return <ActionComponent {...i} />;
     });
 
+    let rowSelection = undefined;
+    if (enableRowSelection) {
+      rowSelection = {
+        selectedRowKeys,
+        type: 'radio',
+        onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
+          // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+          // setDrawerVisible(true);
+          setSelectedRowKeys(selectedRowKeys);
+        },
+        getCheckboxProps: (record: any) => ({
+          disabled: record.name === 'Disabled User', // Column configuration not to be checked
+          name: record.name,
+        }),
+        onSelect: (selected, selectedRows, changeRows) => {
+          console.log(selected, selectedRows, changeRows);
+          setDrawerVisible(true);
+        },
+      };
+    }
+
     return (
       <PageHeaderWrapper breadcrumb={{ routes }}>
+        <Drawer
+          visible={drawerVisible}
+          setVisible={setDrawerVisible}
+          setSelectedRowKeys={setSelectedRowKeys}
+        ></Drawer>
         <ProTable
           {...extra}
           headerTitle=""
           actionRef={actionRef}
+          rowSelection={rowSelection}
           rowKey="id"
           search={{
             labelWidth: 120,
