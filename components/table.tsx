@@ -235,6 +235,7 @@ export const createTable = (
     const [deleteFormValues, setDeleteFormValues] = useState({});
     const [drawerVisible, setDrawerVisible] = useState(false);
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+    const [selectedData, setSelectedData] = useState({});
     const actionRef = useRef<ActionType>();
 
     const linkColumn = createLinkColumn(name, links);
@@ -302,8 +303,8 @@ export const createTable = (
           name: record.name,
         }),
         onSelect: (selected, selectedRows, changeRows) => {
-          console.log(selected, selectedRows, changeRows);
           setDrawerVisible(true);
+          setSelectedData(selected);
         },
       };
     }
@@ -311,7 +312,9 @@ export const createTable = (
     return (
       <PageHeaderWrapper breadcrumb={{ routes }}>
         <Drawer
+          data={selectedData}
           visible={drawerVisible}
+          tableFields={tableFields}
           setVisible={setDrawerVisible}
           setSelectedRowKeys={setSelectedRowKeys}
         ></Drawer>
