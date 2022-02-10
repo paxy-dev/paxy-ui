@@ -62,6 +62,15 @@ const createColumns = (fields: Field[]) => {
     }
 
     switch (field.type) {
+      case 'pointer':
+        render = (_: any, record: { id: string }) => {
+          return (
+            <Tag key={field.name}>
+              <Link to={`/${field.name}s?id=${record[field.name]}`}>{record[field.name]}</Link>
+            </Tag>
+          );
+        };
+        break;
       case 'boolean':
         renderFormItem = () => {
           return <Switch />;

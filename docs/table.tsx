@@ -6,6 +6,7 @@ import { ItemList } from '../src';
 import { Image } from 'antd';
 
 export const requestFields = [
+  { name: 'parent', required: true, type: 'pointer' },
   { name: 'name', required: true, type: 'string' },
   { name: 'description', required: true, type: 'text', note: 'write something to describe' },
   { name: 'boolean', required: true, type: 'boolean' },
