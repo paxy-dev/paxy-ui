@@ -64,16 +64,16 @@ itemList.init(tableFields, 3);
 
 const services = new Services('Kitchen', tableFields, {}, itemList);
 
-const TableList = createTable(
-  'Table',
-  'RootTable',
+const TableList = createTable({
+  name: 'Table',
+  parentField: 'RootTable',
   requestFields,
   updateRequestFields,
   tableFields,
   services,
-  ['subTable1', 'subTable2'],
-  undefined,
-  [
+  links: ['subTable1', 'subTable2'],
+  extra: { scroll: { x: 1600 } },
+  actions: [
     {
       name: 'test',
       fields: [
@@ -83,8 +83,11 @@ const TableList = createTable(
       service: (values: any) => console.log(values),
     },
   ],
-  true,
-);
+  detialFields: [
+    { name: 'name', required: true, type: 'string' },
+    { name: 'description', required: true, type: 'text', note: 'write something to describe' },
+  ],
+});
 
 export default () => {
   return (

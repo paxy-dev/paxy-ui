@@ -49,9 +49,12 @@ export default (props: DrawerProps) => {
         default:
           break;
       }
+      const title = field.label
+        ? field.label
+        : field.name.charAt(0).toUpperCase() + field.name.slice(1);
       return (
         <div key={field.name}>
-          <b>{field.name}</b>
+          <b>{title}</b>
           <p>{value}</p>
         </div>
       );
@@ -60,7 +63,7 @@ export default (props: DrawerProps) => {
 
   return (
     <>
-      <Drawer title="Basic Drawer" placement="right" onClose={onClose} visible={visible}>
+      <Drawer title="Details" placement="right" onClose={onClose} visible={visible} width={'50%'}>
         {contents}
       </Drawer>
     </>

@@ -212,18 +212,29 @@ const ActionComponent: React.FC<TableAction> = (props) => {
   );
 };
 
-export const createTable = (
-  name: string,
-  parentField: string,
-  requestFields: Field[],
-  updateRequestFields: Field[],
-  tableFields: Field[],
-  services: Services,
-  links: string[] = [],
-  extra: object = { scroll: { x: 1600 } },
-  actions: TableAction[] = [],
-  enableRowSelection: boolean = false,
-) => {
+export const createTable = ({
+  name,
+  parentField,
+  requestFields,
+  updateRequestFields,
+  tableFields,
+  services,
+  links = [],
+  extra,
+  actions = [],
+  detialFields = undefined,
+}: {
+  name: string;
+  parentField: string;
+  requestFields: Field[];
+  updateRequestFields: Field[];
+  tableFields: Field[];
+  services: Services;
+  links: string[];
+  extra: object;
+  actions: TableAction[];
+  detialFields?: Field[];
+}) => {
   const CreateForm = modalFormFactory(`New ${name}`, requestFields);
   const UpdateForm = modalFormFactory(`Update ${name}`, updateRequestFields);
   const DeleteForm = modalFormFactory(`Delete ${name}`, [
@@ -298,7 +309,7 @@ export const createTable = (
     });
 
     let rowSelection = undefined;
-    if (enableRowSelection) {
+    if (detialFields) {
       rowSelection = {
         selectedRowKeys,
         type: 'radio',
@@ -323,7 +334,7 @@ export const createTable = (
         <Drawer
           data={selectedData}
           visible={drawerVisible}
-          tableFields={tableFields}
+          tableFields={detialFields ? detialFields : []}
           setVisible={setDrawerVisible}
           setSelectedRowKeys={setSelectedRowKeys}
         ></Drawer>
