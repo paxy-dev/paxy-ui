@@ -1,6 +1,7 @@
 import React from 'react';
 import { Drawer } from 'antd';
 import type { Field } from './data';
+import { createColumn } from './column';
 
 interface DrawerProps {
   data: {};
@@ -23,39 +24,11 @@ export default (props: DrawerProps) => {
     contents = <></>;
   } else {
     contents = tableFields.map((field) => {
-      const { name, type } = field;
-      let value = ' ';
-      switch (type) {
-        case 'string':
-        case 'text':
-        case 'select':
-        case 'paragraph':
-        case 'json':
-          value = data[name];
-          break;
-        case 'boolean':
-        case 'number':
-          value = `${data[name]}`;
-          break;
-        case 'date':
-          value = data[name].toLocaleDateString('en-US');
-          break;
-        case 'multiselect':
-          value = JSON.stringify(data[name]);
-          break;
-        case 'upload':
-          value = data[name].url;
-          break;
-        default:
-          break;
-      }
-      const title = field.label
-        ? field.label
-        : field.name.charAt(0).toUpperCase() + field.name.slice(1);
+      const column = createColumn(field, data[field.name]);
       return (
         <div key={field.name}>
-          <b>{title}</b>
-          <p>{value}</p>
+          <b>{column.title}</b>
+          <p>{column.value}</p>
         </div>
       );
     });
