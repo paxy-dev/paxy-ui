@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
-import React, { useEffect } from 'react';
-import { Form, Modal } from 'antd';
+import React, { useEffect, useRef } from 'react';
+import { message, Form, Modal } from 'antd';
+import ProForm, { DrawerForm } from '@ant-design/pro-form';
+import type { ProFormInstance } from '@ant-design/pro-form';
 import { Field } from '../data';
 import { createFormItem } from './FormItem';
 
@@ -53,4 +55,48 @@ export const modalFormFactory = (title: string, fields: Field[]) => {
   };
 
   return ModalForm;
+};
+
+export const drawerFormFactory = (title: string, fields: Field[], trigger: JSX.Element) => {
+  const formItems = fields.map((field) => {
+    return createFormItem(field);
+  });
+
+  const _Form = (props: { submit: (values: any) => void; initialValues?: any }) => {
+    const { initialValues, submit } = props;
+    const formRef = useRef<ProFormInstance>();
+
+    return (
+      <DrawerForm
+        title={title}
+        trigger={trigger}
+        initialValues={initialValues}
+        formRef={formRef}
+        submitter={{
+          searchConfig: {
+            resetText: 'Close',
+            submitText: 'Confirm',
+          },
+        }}
+        layout={'vertical'}
+        drawerProps={{
+          destroyOnClose: true,
+        }}
+        onFinish={async (values) => {
+          // const fieldsValue = await form.validateFields();
+          try {
+            await submit(values);
+            message.success('Success');
+            return true;
+          } catch (err: any) {
+            message.error(err);
+            return false;
+          }
+        }}
+      >
+        {formItems}
+      </DrawerForm>
+    );
+  };
+  return _Form;
 };
