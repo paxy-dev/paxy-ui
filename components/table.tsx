@@ -15,47 +15,8 @@ import ProTable, { EditableProTable } from '@ant-design/pro-table';
 import type { Field, Services, TableAction } from './data';
 import { modalFormFactory } from './Form';
 import Drawer from './Drawer';
-import { createColumn } from './column';
-
-const createLinkColumn = (rootName: string, links: string[]) => {
-  let linkColumn: any = [];
-  if (links.length > 0) {
-    linkColumn = [
-      {
-        name: 'links',
-        type: 'text',
-        required: true,
-        disabled: true,
-        render: (_: any, record: { id: string }) => {
-          return links.map((i) => {
-            return (
-              <Tag key={i}>
-                <Link to={`/${i}s?${rootName.toLowerCase()}=${record.id}`}>{i}</Link>
-              </Tag>
-            );
-          });
-        },
-      },
-    ];
-  }
-  return linkColumn;
-};
-
-const createServiceHandler = (msg: string, service: (fieldsValues: any) => void) => {
-  return async (values: any) => {
-    const hide = message.loading(msg);
-    try {
-      await service(values);
-      hide();
-      message.success('success');
-      return true;
-    } catch (error) {
-      hide();
-      message.error(error.message);
-      return false;
-    }
-  };
-};
+import { createColumn, createLinkColumn } from './column';
+import { createServiceHandler } from './service';
 
 const ActionComponent: React.FC<TableAction> = (props) => {
   const ActionForm = modalFormFactory(`${props.name}`, props.fields);

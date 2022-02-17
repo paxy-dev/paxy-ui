@@ -155,3 +155,27 @@ export const createColumn = (field: Field, value?: any) => {
     value: value ? convertDisplayValue(value, field.type) : value,
   };
 };
+
+export const createLinkColumn = (rootName: string, links: string[]) => {
+  let linkColumn: any = [];
+  if (links.length > 0) {
+    linkColumn = [
+      {
+        name: 'links',
+        type: 'text',
+        required: true,
+        disabled: true,
+        render: (_: any, record: { id: string }) => {
+          return links.map((i) => {
+            return (
+              <Tag key={i}>
+                <Link to={`/${i}s?${rootName.toLowerCase()}=${record.id}`}>{i}</Link>
+              </Tag>
+            );
+          });
+        },
+      },
+    ];
+  }
+  return linkColumn;
+};
