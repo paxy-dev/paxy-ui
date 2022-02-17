@@ -74,34 +74,20 @@ export const createDrawerTable = ({
       },
     ];
 
-    let rowSelection = {};
-    if (detialFields) {
-      rowSelection = {
-        selectedRowKeys,
-        type: 'radio',
-        onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
-          // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-          // setDrawerVisible(true);
-          setSelectedRowKeys(selectedRowKeys);
-        },
-        getCheckboxProps: (record: any) => ({
-          disabled: record.name === 'Disabled User', // Column configuration not to be checked
-          name: record.name,
-        }),
-        onSelect: (selected, selectedRows, changeRows) => {
-          setUpdateFormValues(selected);
-          handleUpdateModalVisible(true);
-        },
-      };
-    }
-
     return (
       <PageHeaderWrapper breadcrumb={{ routes }}>
         <ProTable
           {...extra}
           headerTitle=""
           actionRef={actionRef}
-          rowSelection={rowSelection}
+          onRow={(record) => {
+            return {
+              onClick: (_) => {
+                setUpdateFormValues(record);
+                handleUpdateModalVisible(true);
+              },
+            };
+          }}
           rowKey="id"
           search={{
             labelWidth: 120,

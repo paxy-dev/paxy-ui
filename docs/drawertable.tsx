@@ -8,10 +8,16 @@ import { Image } from 'antd';
 export const requestFields = [
   { name: 'parent', required: true, type: 'pointer' },
   { name: 'name', required: true, type: 'string' },
-  { name: 'description', required: true, type: 'text', note: 'write something to describe' },
-  { name: 'boolean', required: true, type: 'boolean' },
-  { name: 'number', required: true, type: 'number' },
-  { name: 'date', required: true, type: 'date' },
+  {
+    name: 'description',
+    required: true,
+    type: 'text',
+    note: 'write something to describe',
+    hideInTable: true,
+  },
+  { name: 'boolean', required: true, type: 'boolean', hideInTable: true },
+  { name: 'number', required: true, type: 'number', hideInTable: true },
+  { name: 'date', required: true, type: 'date', hideInTable: true },
   {
     name: 'select',
     required: true,
@@ -22,6 +28,7 @@ export const requestFields = [
       { text: 'Garnet', value: 'garnet' },
       { text: 'Yuna', value: 'yuna' },
     ],
+    hideInTable: true,
   },
   {
     name: 'multiselect',
@@ -32,9 +39,16 @@ export const requestFields = [
       { text: 'Switch', value: 'switch' },
       { text: 'Oculus Quest 2', value: 'oculusquest2' },
     ],
+    hideInTable: true,
   },
-  { name: 'paragraph', required: false, type: 'paragraph' },
-  { name: 'json', required: false, type: 'json', note: '[{"type":"normal","sn":"918539188"}]' },
+  { name: 'paragraph', required: false, type: 'paragraph', hideInTable: true },
+  {
+    name: 'json',
+    required: false,
+    type: 'json',
+    note: '[{"type":"normal","sn":"918539188"}]',
+    hideInTable: true,
+  },
   {
     name: 'photo',
     required: false,
@@ -54,8 +68,7 @@ export const updateRequestFields = [
 ];
 
 export const tableFields = [
-  { name: 'name', required: true, type: 'string' },
-  { name: 'number', required: true, type: 'number' },
+  ...updateRequestFields,
   { name: 'createdAt', required: true, type: 'date', disabled: true },
   { name: 'updatedAt', required: true, type: 'date', disabled: true },
 ];

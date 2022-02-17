@@ -79,6 +79,7 @@ export const drawerFormFactory = (title: string, fields: Field[], trigger?: JSX.
           title="Are you sure？"
           okText="Yes"
           cancelText="No"
+          placement="bottom"
           onConfirm={async () => {
             await onDelete(initialValues);
             onVisibleChange?.(false);

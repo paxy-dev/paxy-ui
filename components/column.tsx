@@ -142,6 +142,7 @@ export const createColumn = (field: Field, value?: any) => {
     title: field.label ? field.label : field.name.charAt(0).toUpperCase() + field.name.slice(1),
     dataIndex: field.name,
     hideInForm: true,
+    hideInTable: field.hideInTable !== undefined ? field.hideInTable : false,
     render,
     renderFormItem,
     formItemProps,

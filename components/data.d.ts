@@ -22,6 +22,7 @@ export interface Field {
   valueEnum?: ValueEnum[];
   sorter?: (a: Field, b: Field) => boolean | number;
   note?: string;
+  hideInTable?: boolean;
 }
 
 export interface TableListPagination {
