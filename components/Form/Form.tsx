@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 import React, { useEffect, useRef } from 'react';
-import { message, Form, Modal } from 'antd';
-import ProForm, { DrawerForm } from '@ant-design/pro-form';
+import { Button, Form, Modal, Popconfirm } from 'antd';
+import { DrawerForm } from '@ant-design/pro-form';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import { Field } from '../data';
 import { createFormItem } from './FormItem';
@@ -57,19 +57,46 @@ export const modalFormFactory = (title: string, fields: Field[]) => {
   return ModalForm;
 };
 
-export const drawerFormFactory = (title: string, fields: Field[], trigger: JSX.Element) => {
+export const drawerFormFactory = (title: string, fields: Field[], trigger?: JSX.Element) => {
   const formItems = fields.map((field) => {
     return createFormItem(field);
   });
 
-  const _Form = (props: { submit: (values: any) => void; initialValues?: any }) => {
-    const { initialValues, submit } = props;
+  const _Form = (props: {
+    onSubmit: (values: any) => void;
+    onDelete?: (initialValues: any) => void;
+    initialValues?: any;
+    visible?: boolean;
+    onVisibleChange?: (visible: boolean) => void;
+  }) => {
+    const { initialValues, onSubmit, visible, onVisibleChange, onDelete } = props;
     const formRef = useRef<ProFormInstance>();
+
+    let extra;
+    if (onDelete) {
+      extra = (
+        <Popconfirm
+          title="Are you sure？"
+          okText="Yes"
+          cancelText="No"
+          onConfirm={async () => {
+            await onDelete(initialValues);
+            onVisibleChange?.(false);
+          }}
+        >
+          <Button type="primary" danger>
+            Delete
+          </Button>
+        </Popconfirm>
+      );
+    }
 
     return (
       <DrawerForm
         title={title}
         trigger={trigger}
+        visible={visible}
+        onVisibleChange={onVisibleChange}
         initialValues={initialValues}
         formRef={formRef}
         submitter={{
@@ -81,15 +108,14 @@ export const drawerFormFactory = (title: string, fields: Field[], trigger: JSX.E
         layout={'vertical'}
         drawerProps={{
           destroyOnClose: true,
+          extra,
         }}
         onFinish={async (values) => {
           // const fieldsValue = await form.validateFields();
           try {
-            await submit(values);
-            message.success('Success');
+            await onSubmit(values);
             return true;
           } catch (err: any) {
-            message.error(err);
             return false;
           }
         }}

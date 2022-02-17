@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { modalFormFactory, drawerFormFactory } from '../components/Form/Form';
 
 export default () => {
@@ -12,17 +12,24 @@ export default () => {
     <Button type="primary">Open</Button>,
   );
 
+  const [visible, handleVisible] = useState<boolean>(false);
+
   return (
     <>
       <Form
-        submit={(values) => {
+        onSubmit={(values) => {
           if (values.name === 'error') {
             throw 'error';
           } else {
-            console.log(values);
+            message.success('ok');
           }
         }}
+        onDelete={(values) => {
+          console.log(values);
+        }}
         initialValues={{ name: 'name', description: 'description' }}
+        visible={visible}
+        onVisibleChange={handleVisible}
       />
     </>
   );
