@@ -7,7 +7,6 @@ import type { ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { Field, Services, TableAction } from './data';
 import { modalFormFactory, drawerFormFactory } from './Form';
-import Drawer from './Drawer';
 import { createColumn, createLinkColumn } from './column';
 import { createServiceHandler } from './service';
 
@@ -120,7 +119,17 @@ export const createDrawerTable = ({
               initialValues={updateFormValues}
               visible={updateModalVisible}
               onVisibleChange={handleUpdateModalVisible}
-              onDelete={deleteHandler}
+              onDelete={async (values: any) => {
+                const success = await deleteHandler(values);
+                if (success) {
+                  if (actionRef.current) {
+                    actionRef.current.reload();
+                  }
+                  return true;
+                } else {
+                  return false;
+                }
+              }}
             />,
             // ...actionButtons,
           ]}
