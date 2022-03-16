@@ -94,11 +94,9 @@ export const createDrawerTable = ({
           toolBarRender={() => [
             <CreateForm
               onSubmit={async (value: any) => {
-                const success = await createHandler(value);
-                if (success) {
-                  if (actionRef.current) {
-                    actionRef.current.reload();
-                  }
+                await createHandler(value);
+                if (actionRef.current) {
+                  actionRef.current.reload();
                 }
               }}
               // onCancel={() => {
@@ -108,26 +106,19 @@ export const createDrawerTable = ({
             />,
             <UpdateForm
               onSubmit={async (value: any) => {
-                const success = await updateHandler(value);
-                if (success) {
-                  setUpdateFormValues({});
-                  if (actionRef.current) {
-                    actionRef.current.reload();
-                  }
+                await updateHandler(value);
+                setUpdateFormValues({});
+                if (actionRef.current) {
+                  actionRef.current.reload();
                 }
               }}
               initialValues={updateFormValues}
               visible={updateModalVisible}
               onVisibleChange={handleUpdateModalVisible}
               onDelete={async (values: any) => {
-                const success = await deleteHandler(values);
-                if (success) {
-                  if (actionRef.current) {
-                    actionRef.current.reload();
-                  }
-                  return true;
-                } else {
-                  return false;
+                await deleteHandler(values);
+                if (actionRef.current) {
+                  actionRef.current.reload();
                 }
               }}
             />,

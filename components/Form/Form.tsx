@@ -64,7 +64,7 @@ export const drawerFormFactory = (title: string, fields: Field[], trigger?: JSX.
 
   const _Form = (props: {
     onSubmit: (values: any) => void;
-    onDelete?: (initialValues: any) => Promise<boolean>;
+    onDelete?: (initialValues: any) => void;
     initialValues?: any;
     visible?: boolean;
     onVisibleChange?: (visible: boolean) => void;
@@ -81,10 +81,10 @@ export const drawerFormFactory = (title: string, fields: Field[], trigger?: JSX.
           cancelText="No"
           placement="bottom"
           onConfirm={async () => {
-            const success = await onDelete(initialValues);
-            if (success) {
+            try {
+              await onDelete(initialValues);
               onVisibleChange?.(false);
-            }
+            } catch (error) {}
           }}
         >
           <Button type="primary" danger>

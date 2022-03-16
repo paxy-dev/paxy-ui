@@ -46,6 +46,7 @@ export class Services {
 
   create = async (params: any) => {
     // eslint-disable-next-line no-alert
+    // throw('ddd');
     alert(JSON.stringify(params));
   };
 

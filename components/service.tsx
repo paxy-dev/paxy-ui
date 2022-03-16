@@ -7,11 +7,10 @@ export const createServiceHandler = (msg: string, service: (fieldsValues: any) =
       await service(values);
       hide();
       message.success('success');
-      return true;
     } catch (error: any) {
       hide();
       message.error(error);
-      return false;
+      throw error;
     }
   };
 };
