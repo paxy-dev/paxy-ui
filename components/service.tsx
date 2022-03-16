@@ -9,7 +9,7 @@ export const createServiceHandler = (msg: string, service: (fieldsValues: any) =
       message.success('success');
     } catch (error: any) {
       hide();
-      message.error(error);
+      message.error(error.message);
       throw error;
     }
   };
