@@ -70,7 +70,11 @@ class RemoteSelect extends React.Component<RemoteSelectProps> {
   };
 
   render() {
-    const options = this.state.data.map((d: any) => <Option key={d.value}>{d.label}</Option>);
+    const options = this.state.data.map((d: any) => (
+      <Option key={d.value} value={d.value}>
+        {d.label}
+      </Option>
+    ));
     this.props;
     return (
       <Select
