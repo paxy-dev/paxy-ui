@@ -6,7 +6,20 @@ import { ItemList } from '../src';
 import { Image } from 'antd';
 
 export const requestFields = [
-  { name: 'parent', required: true, type: 'pointer' },
+  {
+    name: 'parent',
+    required: true,
+    type: 'pointer',
+    inputUnitProps: {
+      request: async (params: string) => {
+        console.log(params);
+        return [
+          { label: 'father', value: 'fafa' },
+          { label: 'mother', value: 'mama' },
+        ];
+      },
+    },
+  },
   { name: 'name', required: true, type: 'string' },
   {
     name: 'description',

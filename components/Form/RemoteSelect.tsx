@@ -39,13 +39,15 @@ class RemoteSelect extends React.Component<RemoteSelectProps> {
   };
 
   componentDidMount = async () => {
-    fetch({
-      service: this.props.request,
-      callback: (data) => {
-        console.log(data);
-        this.setState({ data });
-      },
-    });
+    if (this.props.request) {
+      fetch({
+        service: this.props.request,
+        callback: (data) => {
+          console.log(data);
+          this.setState({ data });
+        },
+      });
+    }
   };
 
   handleSearch = async (value: string) => {
