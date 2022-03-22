@@ -30,6 +30,23 @@ export default () => {
         { text: 'Oculus Quest 2', value: 'oculusquest2' },
       ],
     },
+    {
+      name: 'pointer',
+      required: false,
+      type: 'pointer',
+      formItemProps: {
+        request: async (params: string) => {
+          console.log(params);
+          return [
+            { label: '全部', value: 'all' },
+            { label: '未解决', value: 'open' },
+            { label: '已解决', value: 'closed' },
+            { label: '解决中', value: 'processing' },
+          ];
+        },
+        showSearch: true,
+      },
+    },
     { name: 'paragraph', required: true, type: 'paragraph' },
     { name: 'upload', required: true, type: 'upload' },
   ]);

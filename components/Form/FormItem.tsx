@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Form, Input, Switch, DatePicker, Select } from 'antd';
+import { ProFormSelect } from '@ant-design/pro-form';
 import type { Field, ValueEnum } from '../data';
 import { Upload } from '../Input';
 
@@ -10,6 +11,7 @@ const FormItem = Form.Item;
 const { Option } = Select;
 
 export const createFormItem = (field: Field) => {
+  let FormItemTag = FormItem;
   let InputUnit: any;
   let valuePropName = 'value';
   const formItmeProps: any = {};
@@ -102,11 +104,33 @@ export const createFormItem = (field: Field) => {
       });
       InputUnit = (props: any) => <TextArea {...props} />;
       break;
+    case 'pointer':
+      // return (
+      //   <ProFormSelect
+      //     name="select2"
+      //     label="Select"
+      //     showSearch
+      //     request={async (params) => {
+      //       console.log(params);
+      //       return [
+      //         { label: '全部', value: 'all' },
+      //         { label: '未解决', value: 'open' },
+      //         { label: '已解决', value: 'closed' },
+      //         { label: '解决中', value: 'processing' },
+      //       ];
+      //     }}
+      //   />
+      // );
+      FormItemTag = ProFormSelect;
+      InputUnit = () => <></>;
+      formItmeProps.request = field.formItemProps?.request;
+      formItmeProps.showSearch = field.formItemProps?.showSearch;
+      break;
     default:
       InputUnit = (props: any) => <Input {...props} />;
   }
   return (
-    <FormItem
+    <FormItemTag
       labelCol={{ span: 7 }}
       wrapperCol={{ span: 15 }}
       label={field.label ? field.label : field.name.charAt(0).toUpperCase() + field.name.slice(1)}
@@ -118,6 +142,6 @@ export const createFormItem = (field: Field) => {
       {...formItmeProps}
     >
       <InputUnit disabled={field.disabled} />
-    </FormItem>
+    </FormItemTag>
   );
 };

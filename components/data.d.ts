@@ -23,6 +23,7 @@ export interface Field {
   sorter?: (a: Field, b: Field) => boolean | number;
   note?: string;
   hideInTable?: boolean;
+  formItemProps?: any;
 }
 
 export interface TableListPagination {
