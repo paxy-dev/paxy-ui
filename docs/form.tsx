@@ -34,7 +34,7 @@ export default () => {
       name: 'pointer',
       required: false,
       type: 'pointer',
-      formItemProps: {
+      inputUnitProps: {
         request: async (params: string) => {
           console.log(params);
           return [
@@ -44,7 +44,6 @@ export default () => {
             { label: '解决中', value: 'processing' },
           ];
         },
-        showSearch: true,
       },
     },
     { name: 'paragraph', required: true, type: 'paragraph' },

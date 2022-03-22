@@ -24,6 +24,7 @@ export interface Field {
   note?: string;
   hideInTable?: boolean;
   formItemProps?: any;
+  inputUnitProps?: any;
 }
 
 export interface TableListPagination {

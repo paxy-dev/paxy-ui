@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Form, Input, Switch, DatePicker, Select } from 'antd';
-import { ProFormSelect } from '@ant-design/pro-form';
+import RemoteSelect from './RemoteSelect';
 import type { Field, ValueEnum } from '../data';
 import { Upload } from '../Input';
 
@@ -121,10 +121,9 @@ export const createFormItem = (field: Field) => {
       //     }}
       //   />
       // );
-      FormItemTag = ProFormSelect;
-      InputUnit = () => <></>;
-      formItmeProps.request = field.formItemProps?.request;
-      formItmeProps.showSearch = field.formItemProps?.showSearch;
+      InputUnit = (props: any) => (
+        <RemoteSelect {...props} request={field.inputUnitProps?.request} />
+      );
       break;
     default:
       InputUnit = (props: any) => <Input {...props} />;
