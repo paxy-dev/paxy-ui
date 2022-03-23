@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Select } from 'antd';
 
 const { Option } = Select;
@@ -7,31 +7,32 @@ interface RemoteSelectProps {
   request: (value: string | undefined) => Promise<any>;
 }
 
-class RemoteSelect extends React.Component<any> {
-  timeout: any;
+export default (props: any) => {
+  // timeout: any;
 
-  state = {
-    data: [],
-    value: undefined,
-  };
+  // state = {
+  //   data: [],
+  //   value: undefined,
+  // };
 
-  constructor(props: any) {
-    super(props);
-    this.timeout = null;
-  }
+  // constructor(props: any) {
+  //   super(props);
+  //   this.timeout = null;
+  // }
+  let timeout: any;
 
-  fetch = ({
+  const fetch = ({
     value,
     service,
     callback,
   }: {
     value?: string;
     service: (value: string | undefined) => any;
-    callback: (data: object) => void;
+    callback: (data: object[]) => void;
   }) => {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-      this.timeout = null;
+    if (timeout) {
+      clearTimeout(timeout);
+      timeout = null;
     }
     // currentValue = value;
 
@@ -39,63 +40,64 @@ class RemoteSelect extends React.Component<any> {
       service(value).then((data: any) => callback(data));
     };
 
-    this.timeout = setTimeout(query, 300);
+    timeout = setTimeout(query, 300);
   };
+  const [dataList, setDataList] = useState<object[]>();
 
-  componentDidMount = async () => {
-    if (this.props.request) {
-      this.fetch({
-        service: this.props.request,
-        callback: (data) => {
-          this.setState({ data });
-        },
-      });
-    }
-  };
+  // componentDidMount = async () => {
+  //   if (this.props.request) {
+  //     this.fetch({
+  //       service: this.props.request,
+  //       callback: (data) => {
+  //         this.setState({ data });
+  //       },
+  //     });
+  //   }
+  // };
 
-  handleSearch = async (value: string) => {
+  const handleSearch = async (value: string) => {
     if (value) {
-      this.fetch({
+      fetch({
         value,
-        service: this.props.request,
-        callback: (data) => {
-          this.setState({ data });
+        service: props.request,
+        callback: (data: object[]) => {
+          setDataList(data);
         },
       });
     } else {
-      this.setState({ data: [] });
+      setDataList([]);
     }
   };
 
-  handleChange = (value: string) => {
-    this.setState({ value });
-  };
+  const { request, ...others } = props;
 
-  render() {
-    const options = this.state.data.map((d: any) => (
-      <Option key={d.value} value={d.value}>
-        {d.label}
-      </Option>
-    ));
-    const { request, ...others } = this.props;
-    return (
-      <Select
-        {...others}
-        showSearch
-        //value={this.state.value}
-        // // placeholder={this.props.placeholder}
-        // // style={this.props.style}
-        // defaultActiveFirstOption={false}
-        // showArrow={false}
-        filterOption={false}
-        onSearch={this.handleSearch}
-        //onChange={this.handleChange}
-        // notFoundContent={null}
-      >
-        {options}
-      </Select>
-    );
-  }
-}
+  useEffect(() => {
+    if (dataList === undefined) {
+      request().then((data: object[]) => setDataList(data));
+    }
+  }, []);
 
-export default RemoteSelect;
+  const options = dataList?.map((d: any) => (
+    <Option key={d.value} value={d.value}>
+      {d.label}
+    </Option>
+  ));
+
+  return (
+    <Select
+      {...others}
+      showSearch
+      //value={this.state.value}
+      // // placeholder={this.props.placeholder}
+      // // style={this.props.style}
+      // defaultActiveFirstOption={false}
+      // showArrow={false}
+      filterOption={false}
+      onSearch={handleSearch}
+      //onChange={this.handleChange}
+      // notFoundContent={null}
+    >
+      {options}
+    </Select>
+  );
+};

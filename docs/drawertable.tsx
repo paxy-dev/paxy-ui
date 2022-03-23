@@ -22,7 +22,7 @@ export const requestFields = [
         if (params) {
           return dl.filter((i) => i.label.includes(params));
         } else {
-          return dl;
+          return [];
         }
       },
     },
