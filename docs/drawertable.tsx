@@ -27,6 +27,27 @@ export const requestFields = [
       },
     },
   },
+  {
+    name: 'parent2',
+    required: true,
+    type: 'pointer',
+    inputUnitProps: {
+      request: async (params: string) => {
+        const dl = [
+          { label: 'father', value: 'fafa' },
+          { label: 'mother', value: 'mama' },
+          { label: 'sister', value: 'sis' },
+          { label: 'brother', value: 'bro' },
+        ];
+
+        if (params) {
+          return dl.filter((i) => i.label.includes(params));
+        } else {
+          return dl;
+        }
+      },
+    },
+  },
   { name: 'name', required: true, type: 'string' },
   {
     name: 'description',

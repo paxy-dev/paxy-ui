@@ -3,44 +3,48 @@ import { Select } from 'antd';
 
 const { Option } = Select;
 
-let timeout: any;
-let currentValue: string | undefined;
-
 interface RemoteSelectProps {
   request: (value: string | undefined) => Promise<any>;
 }
 
-const fetch = ({
-  value,
-  service,
-  callback,
-}: {
-  value?: string;
-  service: (value: string | undefined) => any;
-  callback: (data: object) => void;
-}) => {
-  if (timeout) {
-    clearTimeout(timeout);
-    timeout = null;
-  }
-  currentValue = value;
-
-  const query = () => {
-    service(value).then((data: any) => callback(data));
-  };
-
-  timeout = setTimeout(query, 300);
-};
-
 class RemoteSelect extends React.Component<any> {
+  timeout: any;
+
   state = {
     data: [],
     value: undefined,
   };
 
+  constructor(props: any) {
+    super(props);
+    this.timeout = null;
+  }
+
+  fetch = ({
+    value,
+    service,
+    callback,
+  }: {
+    value?: string;
+    service: (value: string | undefined) => any;
+    callback: (data: object) => void;
+  }) => {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
+    // currentValue = value;
+
+    const query = () => {
+      service(value).then((data: any) => callback(data));
+    };
+
+    this.timeout = setTimeout(query, 300);
+  };
+
   componentDidMount = async () => {
     if (this.props.request) {
-      fetch({
+      this.fetch({
         service: this.props.request,
         callback: (data) => {
           this.setState({ data });
@@ -51,7 +55,7 @@ class RemoteSelect extends React.Component<any> {
 
   handleSearch = async (value: string) => {
     if (value) {
-      fetch({
+      this.fetch({
         value,
         service: this.props.request,
         callback: (data) => {
