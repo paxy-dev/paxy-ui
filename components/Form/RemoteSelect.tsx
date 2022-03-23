@@ -72,9 +72,18 @@ export default (props: any) => {
   const { request, ...others } = props;
 
   useEffect(() => {
-    if (dataList === undefined) {
-      request().then((data: object[]) => setDataList(data));
-    }
+    let cancel = false;
+    const fetchDataList = async () => {
+      const data = await request();
+      if (cancel) return;
+      setDataList(data);
+    };
+
+    fetchDataList();
+
+    return () => {
+      cancel = true;
+    };
   }, []);
 
   const options = dataList?.map((d: any) => (

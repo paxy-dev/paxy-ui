@@ -19,11 +19,13 @@ export const requestFields = [
           { label: 'brother', value: 'bro' },
         ];
 
-        if (params) {
-          return dl.filter((i) => i.label.includes(params));
-        } else {
-          return [];
-        }
+        return new Promise((resolve, reject) => {
+          if (params) {
+            resolve(dl.filter((i) => i.label.includes(params)));
+          } else {
+            resolve(dl);
+          }
+        });
       },
     },
   },
@@ -40,11 +42,13 @@ export const requestFields = [
           { label: 'brother', value: 'bro' },
         ];
 
-        if (params) {
-          return dl.filter((i) => i.label.includes(params));
-        } else {
-          return dl;
-        }
+        return new Promise((resolve, reject) => {
+          if (params) {
+            resolve(dl.filter((i) => i.label.includes(params)));
+          } else {
+            resolve(dl);
+          }
+        });
       },
     },
   },
