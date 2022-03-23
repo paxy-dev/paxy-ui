@@ -66,6 +66,9 @@ export class ItemList {
           case 'json':
             value = faker.datatype.json();
             break;
+          case 'pointer':
+            value = null;
+            break;
           default:
             if (i === 0) {
               value = null;

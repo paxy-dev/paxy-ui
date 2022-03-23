@@ -105,25 +105,10 @@ export const createFormItem = (field: Field) => {
       InputUnit = (props: any) => <TextArea {...props} />;
       break;
     case 'pointer':
-      // return (
-      //   <ProFormSelect
-      //     name="select2"
-      //     label="Select"
-      //     showSearch
-      //     request={async (params) => {
-      //       console.log(params);
-      //       return [
-      //         { label: '全部', value: 'all' },
-      //         { label: '未解决', value: 'open' },
-      //         { label: '已解决', value: 'closed' },
-      //         { label: '解决中', value: 'processing' },
-      //       ];
-      //     }}
-      //   />
-      // );
-      InputUnit = (props: any) => (
-        <RemoteSelect {...props} request={field.inputUnitProps?.request} />
-      );
+      InputUnit = (props: any) => {
+        console.log('pointerProps', props);
+        return <RemoteSelect {...props} request={field.inputUnitProps?.request} />;
+      };
       break;
     default:
       InputUnit = (props: any) => <Input {...props} />;

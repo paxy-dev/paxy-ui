@@ -32,7 +32,7 @@ const fetch = ({
   timeout = setTimeout(query, 300);
 };
 
-class RemoteSelect extends React.Component<RemoteSelectProps> {
+class RemoteSelect extends React.Component<any> {
   state = {
     data: [],
     value: undefined,
@@ -43,7 +43,6 @@ class RemoteSelect extends React.Component<RemoteSelectProps> {
       fetch({
         service: this.props.request,
         callback: (data) => {
-          console.log(data);
           this.setState({ data });
         },
       });
@@ -75,19 +74,20 @@ class RemoteSelect extends React.Component<RemoteSelectProps> {
         {d.label}
       </Option>
     ));
-    this.props;
+    const { request, ...others } = this.props;
     return (
       <Select
+        {...others}
         showSearch
-        value={this.state.value}
-        // placeholder={this.props.placeholder}
-        // style={this.props.style}
-        defaultActiveFirstOption={false}
-        showArrow={false}
+        //value={this.state.value}
+        // // placeholder={this.props.placeholder}
+        // // style={this.props.style}
+        // defaultActiveFirstOption={false}
+        // showArrow={false}
         filterOption={false}
         onSearch={this.handleSearch}
-        onChange={this.handleChange}
-        notFoundContent={null}
+        //onChange={this.handleChange}
+        // notFoundContent={null}
       >
         {options}
       </Select>

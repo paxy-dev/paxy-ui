@@ -12,11 +12,18 @@ export const requestFields = [
     type: 'pointer',
     inputUnitProps: {
       request: async (params: string) => {
-        console.log(params);
-        return [
+        const dl = [
           { label: 'father', value: 'fafa' },
           { label: 'mother', value: 'mama' },
+          { label: 'sister', value: 'sis' },
+          { label: 'brother', value: 'bro' },
         ];
+
+        if (params) {
+          return dl.filter((i) => i.label.includes(params));
+        } else {
+          return dl;
+        }
       },
     },
   },
