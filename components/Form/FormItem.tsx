@@ -106,7 +106,6 @@ export const createFormItem = (field: Field) => {
       break;
     case 'pointer':
       InputUnit = (props: any) => {
-        console.log('pointerProps', props);
         return <RemoteSelect {...props} request={field.inputUnitProps?.request} />;
       };
       break;
