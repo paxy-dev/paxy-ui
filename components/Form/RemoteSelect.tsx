@@ -55,7 +55,6 @@ class RemoteSelect extends React.Component<any> {
         value,
         service: this.props.request,
         callback: (data) => {
-          console.log(data);
           this.setState({ data });
         },
       });
