@@ -12,7 +12,6 @@ export const requestFields = [
     type: 'pointer',
     inputUnitProps: {
       request: async (params: string) => {
-        console.log('request', params);
         const dl = [
           { label: 'father', value: 'fafa' },
           { label: 'mother', value: 'mama' },
@@ -38,7 +37,7 @@ export const requestFields = [
   },
   {
     name: 'parent2',
-    required: true,
+    required: false,
     type: 'pointer',
     inputUnitProps: {
       request: async (params: string) => {

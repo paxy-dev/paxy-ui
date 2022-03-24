@@ -7,6 +7,29 @@ import { Image } from 'antd';
 
 export const requestFields = [
   { name: 'parent', required: true, type: 'pointer' },
+  {
+    name: 'parent2',
+    required: false,
+    type: 'pointer',
+    inputUnitProps: {
+      request: async (params: string) => {
+        const dl = [
+          { label: 'father', value: 'fafa' },
+          { label: 'mother', value: 'mama' },
+          { label: 'sister', value: 'sis' },
+          { label: 'brother', value: 'bro' },
+        ];
+
+        return new Promise((resolve, reject) => {
+          if (params) {
+            resolve(dl.filter((i) => i.label.includes(params)));
+          } else {
+            resolve(dl);
+          }
+        });
+      },
+    },
+  },
   { name: 'name', required: true, type: 'string' },
   { name: 'description', required: true, type: 'text', note: 'write something to describe' },
   { name: 'boolean', required: true, type: 'boolean' },

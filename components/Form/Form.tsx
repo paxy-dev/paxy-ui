@@ -113,10 +113,15 @@ export const drawerFormFactory = (title: string, fields: Field[], trigger?: JSX.
           destroyOnClose: true,
           extra,
         }}
-        onFinish={async (values) => {
-          // const fieldsValue = await form.validateFields();
+        onFinish={async (_) => {
+          // const submitValues = {};
+          // Object.keys(initialValues).forEach((key) => {
+          //   submitValues[key] = values[key];
+          // });
+
+          const fieldsValue = await formRef.current.validateFields();
           try {
-            await onSubmit(values);
+            await onSubmit(fieldsValue);
             return true;
           } catch (err: any) {
             return false;
