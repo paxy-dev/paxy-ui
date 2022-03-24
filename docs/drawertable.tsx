@@ -12,6 +12,7 @@ export const requestFields = [
     type: 'pointer',
     inputUnitProps: {
       request: async (params: string) => {
+        console.log('request', params);
         const dl = [
           { label: 'father', value: 'fafa' },
           { label: 'mother', value: 'mama' },
@@ -21,6 +22,12 @@ export const requestFields = [
 
         return new Promise((resolve, reject) => {
           if (params) {
+            if (params === 'abc') {
+              resolve([
+                { label: 'ABC', value: 'abc' },
+                { label: 'ABCD', value: 'abcd' },
+              ]);
+            }
             resolve(dl.filter((i) => i.label.includes(params)));
           } else {
             resolve(dl);

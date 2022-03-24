@@ -43,7 +43,6 @@ export default (props: any) => {
     timeout = setTimeout(query, 300);
   };
   const [dataList, setDataList] = useState<object[]>();
-
   // componentDidMount = async () => {
   //   if (this.props.request) {
   //     this.fetch({
@@ -56,17 +55,34 @@ export default (props: any) => {
   // };
 
   const handleSearch = async (value: string) => {
-    if (value) {
-      fetch({
-        value,
-        service: props.request,
-        callback: (data: object[]) => {
-          setDataList(data);
-        },
-      });
-    } else {
-      setDataList([]);
-    }
+    fetch({
+      value,
+      service: props.request,
+      callback: (data: object[]) => {
+        setDataList(data);
+      },
+    });
+    // if (value) {
+    //   fetch({
+    //     value,
+    //     service: props.request,
+    //     callback: (data: object[]) => {
+    //       setDataList(data);
+    //     },
+    //   });
+    // } else {
+    //   setDataList([]);
+    // }
+  };
+
+  const handleClear = () => {
+    fetch({
+      value: undefined,
+      service: props.request,
+      callback: (data: object[]) => {
+        setDataList(data);
+      },
+    });
   };
 
   const { request, ...others } = props;
@@ -74,12 +90,14 @@ export default (props: any) => {
   useEffect(() => {
     let cancel = false;
     const fetchDataList = async () => {
-      const data = await request();
+      const data = await request(props.value);
       if (cancel) return;
       setDataList(data);
     };
 
-    fetchDataList();
+    if (request) {
+      fetchDataList();
+    }
 
     return () => {
       cancel = true;
@@ -96,14 +114,14 @@ export default (props: any) => {
     <Select
       {...others}
       showSearch
-      //value={this.state.value}
+      allowClear
       // // placeholder={this.props.placeholder}
       // // style={this.props.style}
       // defaultActiveFirstOption={false}
       // showArrow={false}
       filterOption={false}
       onSearch={handleSearch}
-      //onChange={this.handleChange}
+      onClear={handleClear}
       // notFoundContent={null}
     >
       {options}
