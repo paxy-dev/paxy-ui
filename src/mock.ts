@@ -38,6 +38,9 @@ export class ItemList {
           case 'number':
             value = faker.datatype.number();
             break;
+          case 'float':
+            value = faker.random.float();
+            break;
           case 'boolean':
             value = faker.datatype.boolean();
             break;

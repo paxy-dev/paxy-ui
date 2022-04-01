@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Form, Input, Switch, DatePicker, Select } from 'antd';
+import { Form, Input, Switch, DatePicker, Select, InputNumber } from 'antd';
 import RemoteSelect from './RemoteSelect';
 import type { Field, ValueEnum } from '../data';
 import { Upload } from '../Input';
@@ -20,6 +20,9 @@ export const createFormItem = (field: Field) => {
   switch (field.type) {
     case 'number':
       InputUnit = (props: any) => <Input type="number" {...props} />;
+      break;
+    case 'float':
+      InputUnit = (props: any) => <InputNumber style={{ width: '100%' }} step="0.1" {...props} />;
       break;
     case 'boolean':
       InputUnit = (props: any) => <Switch defaultChecked={false} {...props} />;

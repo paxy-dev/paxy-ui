@@ -68,6 +68,7 @@ export const requestFields = [
   },
   { name: 'boolean', required: true, type: 'boolean', hideInTable: true },
   { name: 'number', required: true, type: 'number', hideInTable: true },
+  { name: 'float', required: true, type: 'float', hideInTable: true },
   { name: 'date', required: true, type: 'date', hideInTable: true },
   {
     name: 'select',

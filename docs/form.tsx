@@ -10,6 +10,7 @@ export default () => {
     { name: 'description', required: true, type: 'text' },
     { name: 'boolean', required: true, type: 'boolean' },
     { name: 'number', required: true, type: 'number' },
+    { name: 'float', required: true, type: 'float' },
     { name: 'date', required: true, type: 'date' },
     {
       name: 'select',
