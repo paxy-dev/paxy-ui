@@ -86,11 +86,10 @@ export default (props: any) => {
   };
 
   const { request, ...others } = props;
-
   useEffect(() => {
     let cancel = false;
     const fetchDataList = async () => {
-      const data = await request(props.value);
+      const data = await request(props.value.value);
       if (cancel) return;
       setDataList(data);
     };

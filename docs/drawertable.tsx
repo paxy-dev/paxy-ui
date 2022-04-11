@@ -21,10 +21,10 @@ export const requestFields = [
 
         return new Promise((resolve, reject) => {
           if (params) {
-            if (params === 'abc') {
+            if (params === 'value') {
               resolve([
-                { label: 'ABC', value: 'abc' },
-                { label: 'ABCD', value: 'abcd' },
+                { label: 'LABEL', value: 'value' },
+                { label: 'LABEL2', value: 'value2' },
               ]);
             }
             resolve(dl.filter((i) => i.label.includes(params)));

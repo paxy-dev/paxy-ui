@@ -56,7 +56,9 @@ export const createColumn = (field: Field, value?: any) => {
       render = (_: any, record: { id: string }) => {
         return (
           <Tag key={field.name}>
-            <Link to={`/${field.name}s?id=${record[field.name]}`}>{record[field.name]}</Link>
+            <Link to={`/${field.name}s?id=${record[field.name].value}`}>
+              {record[field.name].label}
+            </Link>
           </Tag>
         );
       };

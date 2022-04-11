@@ -70,7 +70,7 @@ export class ItemList {
             value = faker.datatype.json();
             break;
           case 'pointer':
-            value = 'abc';
+            value = { value: 'value', label: 'LABEL' };
             break;
           default:
             if (i === 0) {
