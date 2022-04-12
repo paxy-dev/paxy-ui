@@ -25,6 +25,8 @@ export interface Field {
   hideInTable?: boolean;
   formItemProps?: any;
   inputUnitProps?: any;
+  targetclass?: string;
+  link?: boolean;
 }
 
 export interface TableListPagination {

@@ -89,7 +89,7 @@ export default (props: any) => {
   useEffect(() => {
     let cancel = false;
     const fetchDataList = async () => {
-      const data = await request(props.value.value);
+      const data = await request(props.value);
       if (cancel) return;
       setDataList(data);
     };

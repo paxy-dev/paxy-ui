@@ -109,7 +109,13 @@ export const createFormItem = (field: Field) => {
       break;
     case 'pointer':
       InputUnit = (props: any) => {
-        return <RemoteSelect {...props} request={field.inputUnitProps?.request} />;
+        return (
+          <RemoteSelect
+            {...props}
+            value={props.value ? props.value.id : undefined}
+            request={field.inputUnitProps?.request}
+          />
+        );
       };
       break;
     default:
