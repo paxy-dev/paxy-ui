@@ -35,29 +35,29 @@ export const requestFields = [
       },
     },
   },
-  {
-    name: 'parent2',
-    required: false,
-    type: 'pointer',
-    inputUnitProps: {
-      request: async (params: string) => {
-        const dl = [
-          { label: 'father', value: 'fafa' },
-          { label: 'mother', value: 'mama' },
-          { label: 'sister', value: 'sis' },
-          { label: 'brother', value: 'bro' },
-        ];
+  // {
+  //   name: 'parent2',
+  //   required: false,
+  //   type: 'pointer',
+  //   inputUnitProps: {
+  //     request: async (params: string) => {
+  //       const dl = [
+  //         { label: 'father', value: 'fafa' },
+  //         { label: 'mother', value: 'mama' },
+  //         { label: 'sister', value: 'sis' },
+  //         { label: 'brother', value: 'bro' },
+  //       ];
 
-        return new Promise((resolve, reject) => {
-          if (params) {
-            resolve(dl.filter((i) => i.label.includes(params)));
-          } else {
-            resolve(dl);
-          }
-        });
-      },
-    },
-  },
+  //       return new Promise((resolve, reject) => {
+  //         if (params) {
+  //           resolve(dl.filter((i) => i.label.includes(params)));
+  //         } else {
+  //           resolve(dl);
+  //         }
+  //       });
+  //     },
+  //   },
+  // },
   { name: 'name', required: true, type: 'string' },
   {
     name: 'description',

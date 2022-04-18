@@ -10,6 +10,16 @@ import { modalFormFactory, drawerFormFactory } from './Form';
 import { createColumn, createLinkColumn } from './column';
 import { createServiceHandler } from './service';
 
+const record2InitialValues = (record: object, fields: Field[]) => {
+  const initialValues = { ...record };
+  fields.forEach((f) => {
+    if (f.type === 'pointer') {
+      initialValues[f.name] = initialValues[f.name]?.id;
+    }
+  });
+  return initialValues;
+};
+
 export const createDrawerTable = ({
   name,
   parentField,
@@ -82,7 +92,7 @@ export const createDrawerTable = ({
           onRow={(record) => {
             return {
               onClick: (_) => {
-                setUpdateFormValues(record);
+                setUpdateFormValues(record2InitialValues(record, updateRequestFields));
                 handleUpdateModalVisible(true);
               },
             };

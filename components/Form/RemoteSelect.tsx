@@ -8,17 +8,6 @@ interface RemoteSelectProps {
 }
 
 export default (props: any) => {
-  // timeout: any;
-
-  // state = {
-  //   data: [],
-  //   value: undefined,
-  // };
-
-  // constructor(props: any) {
-  //   super(props);
-  //   this.timeout = null;
-  // }
   let timeout: any;
 
   const fetch = ({
@@ -42,17 +31,8 @@ export default (props: any) => {
 
     timeout = setTimeout(query, 300);
   };
+  const { request, ...others } = props;
   const [dataList, setDataList] = useState<object[]>();
-  // componentDidMount = async () => {
-  //   if (this.props.request) {
-  //     this.fetch({
-  //       service: this.props.request,
-  //       callback: (data) => {
-  //         this.setState({ data });
-  //       },
-  //     });
-  //   }
-  // };
 
   const handleSearch = async (value: string) => {
     fetch({
@@ -62,17 +42,6 @@ export default (props: any) => {
         setDataList(data);
       },
     });
-    // if (value) {
-    //   fetch({
-    //     value,
-    //     service: props.request,
-    //     callback: (data: object[]) => {
-    //       setDataList(data);
-    //     },
-    //   });
-    // } else {
-    //   setDataList([]);
-    // }
   };
 
   const handleClear = () => {
@@ -85,7 +54,6 @@ export default (props: any) => {
     });
   };
 
-  const { request, ...others } = props;
   useEffect(() => {
     let cancel = false;
     const fetchDataList = async () => {
@@ -103,11 +71,13 @@ export default (props: any) => {
     };
   }, []);
 
-  const options = dataList?.map((d: any) => (
-    <Option key={d.value} value={d.value}>
-      {d.label}
-    </Option>
-  ));
+  const options = dataList?.map((d: any) => {
+    return (
+      <Option key={d.value} value={d.value}>
+        {d.label}
+      </Option>
+    );
+  });
 
   return (
     <Select

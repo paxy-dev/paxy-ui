@@ -57,11 +57,11 @@ export const createColumn = (field: Field, value?: any) => {
         return (
           <Tag key={field.name}>
             {field.link ? (
-              <Link to={`/${field.targetclass}?id=${record[field.name].id}`}>
-                {record[field.name].name}
+              <Link to={`/${field.targetclass}s?id=${record[field.name]?.id}`}>
+                {record[field.name]?.name}
               </Link>
             ) : (
-              record[field.name].name
+              record[field.name]?.name
             )}
           </Tag>
         );
