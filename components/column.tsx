@@ -40,15 +40,29 @@ export const createColumn = (field: Field, value?: any) => {
   let fieldProps;
   let formItemProps;
   if (sorter === undefined) {
-    sorter = (a: Field, b: Field) => {
-      if (a[field.name] && b[field.name]) {
-        return a[field.name].localeCompare(b[field.name]);
-      }
-      if (a[field.name]) {
-        return true;
-      }
-      return false;
-    };
+    switch (field.type) {
+      case 'pointer':
+        sorter = (a: Field, b: Field) => {
+          if (a[field.name]?.name && b[field.name]?.name) {
+            return a[field.name]?.name.localeCompare(b[field.name]?.name);
+          }
+          if (a[field.name]?.name) {
+            return true;
+          }
+          return false;
+        };
+        break;
+      default:
+        sorter = (a: Field, b: Field) => {
+          if (a[field.name] && b[field.name]) {
+            return a[field.name].localeCompare(b[field.name]);
+          }
+          if (a[field.name]) {
+            return true;
+          }
+          return false;
+        };
+    }
   }
 
   switch (field.type) {
