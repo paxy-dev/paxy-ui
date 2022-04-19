@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'umi';
-import { Switch, Tag } from 'antd';
+import { Switch, Tag, Typography } from 'antd';
 import type { Field } from './data';
 import { Upload } from './Input';
+
+const { Text } = Typography;
 
 const convertDisplayValue = (value: any, type: string) => {
   let v = ' ';
@@ -69,15 +71,17 @@ export const createColumn = (field: Field, value?: any) => {
     case 'pointer':
       render = (_: any, record: { id: string }) => {
         return (
-          <Tag key={field.name}>
+          <Text style={{ width: field.width }} ellipsis={{ tooltip: record[field.name]?.name }}>
             {field.link ? (
-              <Link to={`/${field.targetclass}s?id=${record[field.name]?.id}`}>
-                {record[field.name]?.name}
-              </Link>
+              <a>
+                <Link to={`/${field.targetclass}s?id=${record[field.name]?.id}`}>
+                  {record[field.name]?.name}
+                </Link>
+              </a>
             ) : (
               record[field.name]?.name
             )}
-          </Tag>
+          </Text>
         );
       };
       break;

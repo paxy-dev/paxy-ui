@@ -10,6 +10,8 @@ export const requestFields = [
     name: 'parent',
     required: true,
     type: 'pointer',
+    width: 200,
+    link: true,
     inputUnitProps: {
       request: async (params: string) => {
         const dl = [
@@ -105,6 +107,7 @@ export const requestFields = [
     name: 'photo',
     required: false,
     type: 'upload',
+    width: 100,
     render: (_: any, row: any) => {
       if (row.photo) {
         return <Image src={row.photo.url} />;

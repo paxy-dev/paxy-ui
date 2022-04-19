@@ -70,7 +70,7 @@ export class ItemList {
             value = faker.datatype.json();
             break;
           case 'pointer':
-            value = { id: faker.random.number(), name: faker.random.word() };
+            value = { id: faker.random.number(), name: faker.random.words(10) };
             break;
           default:
             if (i === 0) {
