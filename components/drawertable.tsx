@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Button } from 'antd';
 import type { BasicLayoutProps } from '@ant-design/pro-layout';
+import { history } from 'umi';
 import { PageContainer, PageHeaderWrapper } from '@ant-design/pro-layout';
 import { PlusOutlined, FormOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
@@ -58,13 +59,12 @@ export const createDrawerTable = ({
   //   { name: 'id', required: true, type: 'paragraph', disabled: true, label: ' ' },
   // ]);
 
-  const Table: React.FC<BasicLayoutProps> = ({ location }) => {
-    const queryParams = location?.query || {};
-
+  const Table: React.FC<BasicLayoutProps> = (props: any) => {
+    const queryParams = history.location.query || {};
     const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
 
+    const [createFormValues, setCreateFormValues] = useState({});
     const [updateFormValues, setUpdateFormValues] = useState({});
-    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const actionRef = useRef<ActionType>();
 
     const linkColumn = createLinkColumn(name, links);
@@ -112,7 +112,7 @@ export const createDrawerTable = ({
               // onCancel={() => {
               //   handleModalVisible(false);
               // }}
-              initialValues={{ [parentField]: queryParams[parentField] }}
+              initialValues={createFormValues}
             />,
             <UpdateForm
               onSubmit={async (value: any) => {
@@ -135,18 +135,21 @@ export const createDrawerTable = ({
             // ...actionButtons,
           ]}
           params={queryParams}
-          request={(params: any, sorter) => {
+          request={(params, sorter) => {
             const filter = { ...queryParams };
             tableFields.forEach((field) => {
               if (params[field.name]) {
                 filter[field.name] = params[field.name];
               }
             });
+
+            setCreateFormValues(filter);
             const serviceQueryParams = {
               total: params.total,
               pageSize: params.pageSize,
               current: params.current,
             };
+
             return services.query({ ...serviceQueryParams, sorter, filter });
           }}
           columns={columns}

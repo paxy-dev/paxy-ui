@@ -27,6 +27,7 @@ export interface Field {
   inputUnitProps?: any;
   targetclass?: string;
   link?: boolean;
+  ellipsis?: boolean;
 }
 
 export interface TableListPagination {

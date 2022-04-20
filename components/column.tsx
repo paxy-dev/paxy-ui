@@ -73,11 +73,9 @@ export const createColumn = (field: Field, value?: any) => {
         return (
           <Text style={{ width: field.width }} ellipsis={{ tooltip: record[field.name]?.name }}>
             {field.link ? (
-              <a>
-                <Link to={`/${field.targetclass}s?id=${record[field.name]?.id}`}>
-                  {record[field.name]?.name}
-                </Link>
-              </a>
+              <Link to={`/${field.name}s?id=${record[field.name]?.id}`}>
+                {record[field.name]?.name}
+              </Link>
             ) : (
               record[field.name]?.name
             )}
@@ -178,6 +176,7 @@ export const createColumn = (field: Field, value?: any) => {
     width: field.width,
     sorter,
     value: value ? convertDisplayValue(value, field.type) : value,
+    ellipsis: field.ellipsis,
   };
 };
 
