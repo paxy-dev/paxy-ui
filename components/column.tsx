@@ -90,6 +90,11 @@ export const createColumn = (field: Field, value?: any) => {
         );
       };
       break;
+    case 'id':
+      render = (_: any, row: any) => {
+        return <a>{row[field.name]}</a>;
+      };
+      break;
     case 'boolean':
       renderFormItem = () => {
         return <Switch />;

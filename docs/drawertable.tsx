@@ -1,11 +1,30 @@
 import { ConfigProvider } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import { createDrawerTable } from '../components/drawertable';
+import { drawerFormFactory } from '../components/Form';
 import { Services } from './service';
 import { ItemList } from '../src';
 import { Image } from 'antd';
+import { CopyOutlined, CopyTwoTone } from '@ant-design/icons';
+
+const Form = drawerFormFactory(
+  `Copy`,
+  [{ name: 'name', type: 'string', required: true }],
+  <CopyTwoTone />,
+);
 
 export const requestFields = [
+  {
+    name: 'option',
+    label: 'Actions',
+    type: 'option',
+    required: true,
+    render: (_: any, record: object) => (
+      <>
+        <Form onSubmit={(values) => console.log(values)} />
+      </>
+    ),
+  },
   {
     name: 'parent',
     required: true,
@@ -118,7 +137,7 @@ export const requestFields = [
 ];
 
 export const updateRequestFields = [
-  { name: 'id', required: true, type: 'string', disabled: true },
+  { name: 'id', required: true, type: 'id', disabled: true },
   ...requestFields,
 ];
 

@@ -68,7 +68,24 @@ export const createDrawerTable = ({
     const actionRef = useRef<ActionType>();
 
     const linkColumns = links.map((linkname) => createLinkColumn(name, linkname));
-    const columns = [...linkColumns, ...tableFields].map((field) => createColumn(field));
+    const columns = [...linkColumns, ...tableFields].map((field) => {
+      const col = createColumn(field);
+      if (field.type === 'id') {
+        return {
+          ...col,
+          onCell: (record: any) => {
+            return {
+              onClick: (_: any) => {
+                console.log(record);
+                setUpdateFormValues(record2InitialValues(record, updateRequestFields));
+                handleUpdateModalVisible(true);
+              },
+            };
+          },
+        };
+      }
+      return col;
+    });
 
     const routes = [
       {
@@ -89,14 +106,6 @@ export const createDrawerTable = ({
           {...extra}
           headerTitle=""
           actionRef={actionRef}
-          onRow={(record) => {
-            return {
-              onClick: (_) => {
-                setUpdateFormValues(record2InitialValues(record, updateRequestFields));
-                handleUpdateModalVisible(true);
-              },
-            };
-          }}
           rowKey="id"
           search={{
             labelWidth: 120,
