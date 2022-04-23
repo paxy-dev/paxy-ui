@@ -67,8 +67,8 @@ export const createDrawerTable = ({
     const [updateFormValues, setUpdateFormValues] = useState({});
     const actionRef = useRef<ActionType>();
 
-    const linkColumn = createLinkColumn(name, links);
-    const columns = [...linkColumn, ...tableFields].map((field) => createColumn(field));
+    const linkColumns = links.map((linkname) => createLinkColumn(name, linkname));
+    const columns = [...linkColumns, ...tableFields].map((field) => createColumn(field));
 
     const routes = [
       {
@@ -104,7 +104,7 @@ export const createDrawerTable = ({
           toolBarRender={() => [
             <CreateForm
               onSubmit={async (value: any) => {
-                await createHandler(value);
+                await createHandler({ ...value, locationState: history.location.state });
                 if (actionRef.current) {
                   actionRef.current.reload();
                 }
@@ -150,7 +150,12 @@ export const createDrawerTable = ({
               current: params.current,
             };
 
-            return services.query({ ...serviceQueryParams, sorter, filter });
+            return services.query({
+              ...serviceQueryParams,
+              sorter,
+              filter,
+              locationState: history.location.state,
+            });
           }}
           columns={columns}
         />

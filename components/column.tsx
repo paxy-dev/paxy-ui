@@ -73,8 +73,15 @@ export const createColumn = (field: Field, value?: any) => {
         return (
           <Text style={{ width: field.width }} ellipsis={{ tooltip: record[field.name]?.name }}>
             {field.link ? (
-              <Link to={`/${field.name}s?id=${record[field.name]?.id}`}>
-                {record[field.name]?.name}
+              // <Link to={`/${field.name}s?id=${record[field.name]?.id}`}>
+              <Link
+                to={{
+                  pathname: `/${field.name}s`,
+                  search: record[field.name]?.id ? `?id=${record[field.name]?.id}` : undefined,
+                  state: field.linkstate ? { ...field.linkstate, srcId: record.id } : undefined,
+                }}
+              >
+                {field.linkstate ? field.name : record[field.name]?.name}
               </Link>
             ) : (
               record[field.name]?.name
@@ -180,26 +187,14 @@ export const createColumn = (field: Field, value?: any) => {
   };
 };
 
-export const createLinkColumn = (rootName: string, links: string[]) => {
-  let linkColumn: any = [];
-  if (links.length > 0) {
-    linkColumn = [
-      {
-        name: 'links',
-        type: 'text',
-        required: true,
-        disabled: true,
-        render: (_: any, record: { id: string }) => {
-          return links.map((i) => {
-            return (
-              <Tag key={i}>
-                <Link to={`/${i}s?${rootName.toLowerCase()}=${record.id}`}>{i}</Link>
-              </Tag>
-            );
-          });
-        },
-      },
-    ];
-  }
-  return linkColumn;
+export const createLinkColumn = (rootName: string, linkname: string) => {
+  return {
+    name: linkname,
+    type: 'text',
+    required: true,
+    disabled: true,
+    render: (_: any, record: { id: string }) => {
+      return <Link to={`/${linkname}?${rootName.toLowerCase()}=${record.id}`}>{linkname}</Link>;
+    },
+  };
 };
