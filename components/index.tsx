@@ -1,5 +1,14 @@
 import { createTable, createEditTable } from './table';
-import { modalFormFactory, formFactory } from './Form';
+import { modalFormFactory, formFactory, drawerFormFactory } from './Form';
 import { createDrawerTable } from './drawertable';
+import { createServiceHandler } from './service';
 
-export { createTable, createEditTable, createDrawerTable, modalFormFactory, formFactory };
+export {
+  createServiceHandler,
+  createTable,
+  createEditTable,
+  createDrawerTable,
+  modalFormFactory,
+  formFactory,
+  drawerFormFactory,
+};

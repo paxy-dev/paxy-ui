@@ -1,7 +1,6 @@
 import { ConfigProvider } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
-import { createDrawerTable } from '../components/drawertable';
-import { drawerFormFactory } from '../components/Form';
+import { drawerFormFactory, createDrawerTable, createServiceHandler } from '../components';
 import { Services } from './service';
 import { ItemList } from '../src';
 import { Image } from 'antd';
@@ -21,7 +20,12 @@ export const requestFields = [
     required: true,
     render: (_: any, record: object) => (
       <>
-        <Form onSubmit={(values) => console.log(values)} />
+        <Form
+          onSubmit={createServiceHandler('Testing', (values) => {
+            console.log(values);
+            throw Error('error');
+          })}
+        />
       </>
     ),
   },
