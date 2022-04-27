@@ -103,9 +103,9 @@ export const createDrawerTable = ({
     return (
       <PageHeaderWrapper breadcrumb={{ routes }}>
         <ProTable
+          actionRef={actionRef}
           {...extra}
           headerTitle=""
-          actionRef={actionRef}
           rowKey="id"
           search={{
             labelWidth: 120,
