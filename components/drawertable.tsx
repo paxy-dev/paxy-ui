@@ -76,7 +76,6 @@ export const createDrawerTable = ({
           onCell: (record: any) => {
             return {
               onClick: (_: any) => {
-                console.log(record);
                 setUpdateFormValues(record2InitialValues(record, updateRequestFields));
                 handleUpdateModalVisible(true);
               },
