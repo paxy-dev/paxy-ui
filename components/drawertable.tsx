@@ -39,7 +39,7 @@ export const createDrawerTable = ({
   tableFields: Field[];
   services: Services;
   links: string[];
-  extra: object;
+  extra: any;
   detialFields?: Field[];
 }) => {
   const CreateForm = drawerFormFactory(
@@ -55,17 +55,18 @@ export const createDrawerTable = ({
   const updateHandler = createServiceHandler(`Updating ${name}`, services.update);
   const deleteHandler = createServiceHandler(`Deleting ${name}`, services.delete);
 
-  // const DeleteForm = modalFormFactory(`Delete ${name}`, [
-  //   { name: 'id', required: true, type: 'paragraph', disabled: true, label: ' ' },
-  // ]);
-
   const Table: React.FC<BasicLayoutProps> = (props: any) => {
     const queryParams = history.location.query || {};
     const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
 
     const [createFormValues, setCreateFormValues] = useState({});
     const [updateFormValues, setUpdateFormValues] = useState({});
-    const actionRef = useRef<ActionType>();
+
+    let { actionRef, ...otherSettings } = extra;
+
+    if (actionRef === undefined) {
+      actionRef = useRef<ActionType>();
+    }
 
     const linkColumns = links.map((linkname) => createLinkColumn(name, linkname));
     const columns = [...linkColumns, ...tableFields].map((field) => {
@@ -102,8 +103,8 @@ export const createDrawerTable = ({
     return (
       <PageHeaderWrapper breadcrumb={{ routes }}>
         <ProTable
+          {...otherSettings}
           actionRef={actionRef}
-          {...extra}
           headerTitle=""
           rowKey="id"
           search={{
