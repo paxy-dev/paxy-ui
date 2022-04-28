@@ -36,7 +36,8 @@ const convertDisplayValue = (value: any, type: string) => {
 };
 
 export const createColumn = (field: Field, value?: any) => {
-  let { type, sorter, render } = field;
+  let { type, sorter } = field;
+  let render;
   let valueEnum;
   let renderFormItem;
   let fieldProps;
@@ -177,7 +178,7 @@ export const createColumn = (field: Field, value?: any) => {
     dataIndex: field.name,
     hideInForm: true,
     hideInTable: field.hideInTable !== undefined ? field.hideInTable : false,
-    render,
+    render: field.render ? field.render : render,
     renderFormItem,
     formItemProps,
     valueType: type,
