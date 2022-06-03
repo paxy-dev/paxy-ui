@@ -185,7 +185,7 @@ export const createColumn = (field: Field, value?: any) => {
     valueEnum,
     fieldProps,
     editable: !field.disabled,
-    colSize: 8,
+    // colSize: 2,
     width: field.width,
     sorter,
     value: value ? convertDisplayValue(value, field.type) : value,

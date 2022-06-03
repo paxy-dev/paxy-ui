@@ -101,15 +101,16 @@ export const createDrawerTable = ({
     ];
 
     return (
-      <PageHeaderWrapper breadcrumb={{ routes }}>
+      <PageHeaderWrapper>
         <ProTable
           {...otherSettings}
           actionRef={actionRef}
           headerTitle=""
           rowKey="id"
           search={{
-            labelWidth: 120,
+            defaultCollapsed: false,
           }}
+          renderFormItem={() => <></>}
           toolBarRender={() => [
             <CreateForm
               onSubmit={async (value: any) => {
