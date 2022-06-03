@@ -110,7 +110,6 @@ export const createDrawerTable = ({
           search={{
             defaultCollapsed: false,
           }}
-          renderFormItem={() => <></>}
           toolBarRender={() => [
             <CreateForm
               onSubmit={async (value: any) => {
