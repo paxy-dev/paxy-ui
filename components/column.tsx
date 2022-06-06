@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'umi';
 import { Switch, Tag, Typography } from 'antd';
 import type { Field } from './data';
-import { Upload } from './Input';
+import { Upload, createInputUnit } from './Input';
 
 const { Text } = Typography;
 
@@ -35,13 +35,23 @@ const convertDisplayValue = (value: any, type: string) => {
   return v;
 };
 
-export const createColumn = (field: Field, value?: any) => {
+export const createColumn = (field: Field, value?: any, formInitValues?: any) => {
   let { type, sorter } = field;
   let render;
   let valueEnum;
-  let renderFormItem;
   let fieldProps;
   let formItemProps;
+
+  const InputUnit = createInputUnit(field);
+
+  const renderFormItem = (
+    a: any,
+    { type, defaultRender, formItemProps, fieldProps, ...rest }: any,
+    form: any,
+  ) => {
+    const disabled = formInitValues[field.name] ? true : false;
+    return <InputUnit disabled={disabled} />;
+  };
   if (sorter === undefined) {
     switch (field.type) {
       case 'pointer':
@@ -97,9 +107,6 @@ export const createColumn = (field: Field, value?: any) => {
       };
       break;
     case 'boolean':
-      renderFormItem = () => {
-        return <Switch />;
-      };
       formItemProps = {
         valuePropName: 'checked',
       };
@@ -145,9 +152,9 @@ export const createColumn = (field: Field, value?: any) => {
 
       break;
     case 'upload':
-      renderFormItem = () => {
-        return <Upload />;
-      };
+      // renderFormItem = () => {
+      //   return <Upload />;
+      // };
       render = render || (() => <></>);
       sorter = undefined;
       formItemProps = {

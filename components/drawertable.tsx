@@ -70,7 +70,7 @@ export const createDrawerTable = ({
 
     const linkColumns = links.map((linkname) => createLinkColumn(name, linkname));
     const columns = [...linkColumns, ...tableFields].map((field) => {
-      const col = createColumn(field);
+      const col = createColumn(field, undefined, queryParams);
       if (field.type === 'id') {
         return {
           ...col,
@@ -144,6 +144,7 @@ export const createDrawerTable = ({
             // ...actionButtons,
           ]}
           params={queryParams}
+          form={{ initialValues: queryParams }}
           request={(params, sorter) => {
             const filter = { ...queryParams };
             tableFields.forEach((field) => {
